@@ -1,26 +1,81 @@
 {
-  "meta": { "title": "Qafila — the letter of credit, without the bank" },
-  "nav": { "connect": "Connect Wallet", "dashboard": "Dashboard", "home": "Home" },
+  "meta": { "title": "Qafila - the letter of credit, without the bank" },
+  "nav": {
+    "connect": "Connect Wallet",
+    "dashboard": "Dashboard",
+    "home": "Home",
+    "howItWorks": "How it works",
+    "security": "Security",
+    "docs": "Docs",
+    "about": "About",
+    "getStarted": "Get started"
+  },
   "hero": {
+    "kicker": "Programmable trade escrow",
     "title": "The letter of credit, without the bank.",
-    "subtitle": "Lock stablecoin in escrow on Polygon. Your overseas supplier is paid the moment shipment is proven — no bank, no 7–10-day wait.",
-    "cta": "Connect Wallet",
+    "subtitle": "Lock stablecoin in escrow on Polygon. Your supplier is paid the moment shipment is proven.",
+    "cta": "Get started",
+    "secondary": "How it works",
     "enter": "Open dashboard",
+    "builtOn": "Built on Polygon",
     "network": "Running on Polygon Amoy testnet"
+  },
+  "features": {
+    "kicker": "Held in trust, released on proof",
+    "title": "Fast. Safe. On-chain.",
+    "subtitle": "Qafila leans on Polygon so payment clears in seconds, not a ten-day review cycle.",
+    "secureTitle": "Escrowed on-chain",
+    "secureBody": "Funds sit in an audited smart contract, never in a middleman's account.",
+    "trustTitle": "Amana, not a loan",
+    "trustBody": "Your capital is safekept and released only when the agreed condition is met.",
+    "releaseTitle": "Paid on shipment",
+    "releaseBody": "A matching shipping-document hash releases payment to your supplier automatically."
   },
   "how": {
     "title": "How it works",
-    "step1Title": "Fund escrow",
-    "step1Body": "The importer locks stablecoin in a smart-contract escrow — held in trust (amana), not sent.",
-    "step2Title": "Prove shipment",
+    "subtitle": "Three moves from stranger to settled trade.",
+    "step1Title": "Fund the escrow",
+    "step1Body": "The importer locks stablecoin in the contract. Held in trust, not sent.",
+    "step2Title": "Prove the shipment",
     "step2Body": "The exporter submits the agreed shipping document. Its hash is checked on-chain.",
-    "step3Title": "Funds release",
-    "step3Body": "On proof, the escrow releases funds to the exporter automatically. The light passes."
+    "step3Title": "Release the funds",
+    "step3Body": "On proof, the escrow pays the exporter automatically. The light passes."
+  },
+  "problems": {
+    "kicker": "Why traders switch",
+    "title": "The old way loses deals.",
+    "feesTitle": "Bank fees and FX spreads",
+    "feesBody": "Traditional trade finance is expensive and stacked with intermediaries.",
+    "slowTitle": "Seven to ten day waits",
+    "slowBody": "Letters of credit crawl through manual review while goods sit idle.",
+    "rejectTitle": "Rejected over wording",
+    "rejectBody": "A mismatch like 'steel tubes' versus 'steel pipes' can sink the whole deal."
+  },
+  "finalCta": {
+    "title": "Trade with a supplier you don't know yet.",
+    "subtitle": "Open an escrow in a minute. Screen the counterparty, fund, and settle on proof.",
+    "cta": "Get started"
+  },
+  "footer": {
+    "tagline": "The letter of credit, without the bank.",
+    "product": "Product",
+    "company": "Company",
+    "resources": "Resources",
+    "howItWorks": "How it works",
+    "dashboard": "Dashboard",
+    "security": "Security",
+    "about": "About",
+    "careers": "Careers",
+    "contact": "Contact",
+    "docs": "Docs",
+    "faq": "FAQ",
+    "rights": "Qafila. Testnet demo. All rights reserved.",
+    "testnet": "Polygon Amoy testnet"
   },
   "screening": {
     "checking": "Screening counterparty…",
-    "clear": "Screened — clear",
-    "review": "Screened — review",
+    "clear": "Screened, clear",
+    "review": "Screened, review",
     "note": "Counterparty screening via OpenSanctions."
   },
   "lifecycle": {
@@ -29,7 +84,7 @@
     "Shipped": "Shipped",
     "Released": "Released",
     "Refunded": "Refunded to importer",
-    "Disputed": "Disputed — on hold"
+    "Disputed": "Disputed, on hold"
   },
   "dashboard": {
     "title": "Trade escrows",

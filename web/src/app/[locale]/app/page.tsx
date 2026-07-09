@@ -27,13 +27,13 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="mx-auto max-w-5xl px-6 pb-20">
+    <div className="min-h-[100dvh] bg-night text-mist">
       <AppHeader />
-
+      <main className="mx-auto max-w-5xl px-6 pb-20">
       <div className="mt-10 flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-semibold text-text-hi">{t("title")}</h1>
-          <p className="mt-1 text-sm text-text-dim">{t("subtitle")}</p>
+          <h1 className="font-display text-3xl text-mist">{t("title")}</h1>
+          <p className="mt-1 text-sm text-mist-dim">{t("subtitle")}</p>
         </div>
         <button className="btn-gold" onClick={() => setOpen(true)} disabled={!isConnected || notDeployed}>
           {t("new")}
@@ -68,6 +68,7 @@ export default function DashboardPage() {
           }}
         />
       </Modal>
-    </main>
+      </main>
+    </div>
   );
 }

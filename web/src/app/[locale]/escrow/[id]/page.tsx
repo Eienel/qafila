@@ -19,9 +19,10 @@ export default function EscrowPage() {
   const { trade, isLoading, refetch } = useEscrow(id);
 
   return (
-    <main className="mx-auto max-w-3xl px-6 pb-20">
+    <div className="min-h-[100dvh] bg-night text-mist">
       <AppHeader />
-      <Link href="/app" className="mt-6 inline-block text-sm text-text-dim hover:text-text">
+      <main className="mx-auto max-w-3xl px-6 pb-20">
+      <Link href="/app" className="mt-6 inline-block text-sm text-mist-dim hover:text-mist">
         ← {t("back")}
       </Link>
 
@@ -88,7 +89,8 @@ export default function EscrowPage() {
           </div>
         </div>
       )}
-    </main>
+      </main>
+    </div>
   );
 }
 

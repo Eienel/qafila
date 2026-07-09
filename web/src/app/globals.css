@@ -3,51 +3,104 @@
 @tailwind utilities;
 
 :root {
-  --font-sans: "IBM Plex Sans Arabic", "Tajawal", system-ui, sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", system-ui, sans-serif;
 }
 
 html,
 body {
-  background-color: #0b0b0c;
-  color: #f5f5f5;
+  background-color: #f5f1e8;
+  color: #17130d;
 }
 
 /* Western Arabic numerals everywhere, even in Arabic locale (Gulf convention). */
 * {
-  font-variant-numeric: lining-nums;
+  font-variant-numeric: lining-nums tabular-nums;
 }
 
-/* Subtle mashrabiya-style radial texture on the ambient-black background. */
-.lantern-bg {
-  background-image: radial-gradient(
-    circle at 50% -10%,
-    rgba(241, 212, 138, 0.08),
-    transparent 55%
-  );
+/* Display type: Cormorant for Latin, Amiri for Arabic. */
+.font-display {
+  font-family: var(--font-display-latin), Georgia, serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+:lang(ar) .font-display,
+[lang="ar"] .font-display {
+  font-family: var(--font-display-ar), "Amiri", serif;
+  letter-spacing: 0;
 }
 
 @layer components {
-  .input {
-    @apply w-full rounded-md border border-[rgba(212,175,55,0.18)] bg-surface-2 px-3 py-2 text-sm text-text
-      outline-none transition-colors placeholder:text-text-dim/60 focus:border-gold/60;
-  }
-  .btn-gold {
-    @apply rounded-md bg-gold px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-90
+  /* Primary CTA on LIGHT surfaces — ink pill, cream label (reference look). */
+  .btn-dark {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium
+      text-canvas transition-all duration-200 hover:bg-ink/90 active:translate-y-px
       disabled:cursor-not-allowed disabled:opacity-50;
   }
-  .btn-ghost {
-    @apply rounded-md border border-[rgba(212,175,55,0.18)] px-4 py-2 text-sm text-text-dim transition-colors
-      hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
+  /* Secondary on LIGHT surfaces — hairline outline. */
+  .btn-line {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm
+      font-medium text-ink transition-all duration-200 hover:border-ink/40 hover:bg-ink/[0.03]
+      active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50;
   }
+  /* Primary CTA on DARK surfaces / app — gold. */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-gold-glow to-gold
+      px-5 py-2.5 text-sm font-semibold text-night shadow-gold-cta transition-all duration-200
+      hover:brightness-105 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50
+      disabled:shadow-none;
+  }
+  /* Secondary on DARK surfaces / app. */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-gold/25 px-5 py-2.5 text-sm
+      text-mist-dim transition-colors duration-200 hover:border-gold/50 hover:text-mist
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  /* Dark app form input. */
+  .input {
+    @apply w-full rounded-lg border border-gold/[0.15] bg-night-3 px-3.5 py-2.5 text-sm text-mist
+      outline-none transition-colors placeholder:text-mist-dim/50 focus:border-gold/60;
+  }
+  /* Dark app card. */
   .card {
-    @apply rounded-xl border border-[rgba(212,175,55,0.18)] bg-surface p-5;
+    @apply rounded-2xl border border-gold/[0.12] bg-night-2 p-5;
+  }
+  .eyebrow {
+    @apply text-xs font-medium uppercase tracking-[0.2em] text-gold-deep;
   }
 }
 
-/* Mashrabiya lattice panel — the "funds held in trust" motif. */
+/* Mashrabiya lattice — the "funds held in trust" motif. */
 .mashrabiya {
-  background-color: #141416;
-  background-image:
-    repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.06) 0 1px, transparent 1px 12px),
-    repeating-linear-gradient(-45deg, rgba(212, 175, 55, 0.06) 0 1px, transparent 1px 12px);
+  background-color: #141210;
+  background-image: repeating-linear-gradient(
+      45deg,
+      rgba(212, 175, 55, 0.07) 0 1px,
+      transparent 1px 13px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(212, 175, 55, 0.07) 0 1px,
+      transparent 1px 13px
+    );
+}
+
+/* Soft paper grain on light sections (fixed, cheap, non-scrolling). */
+.grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
