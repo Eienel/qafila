@@ -13,11 +13,13 @@ A "smart-contract letter of credit" built for the Polygon *Smart Commerce Infras
 
 ## Milestone status
 
-- [x] **M1 — Scaffold + wallet connect on Amoy** (this commit)
-- [ ] M2 — Escrow contract: states, events, SafeERC20, reentrancy guard, tests, deploy
-- [ ] M3 — Frontend flows (create → screen → fund → submit doc → release) + dashboard
-- [ ] M4 — Design system (lantern theme, motifs, RTL polish, halal framing)
-- [ ] M5 — Seed escrows + 2-minute demo script
+- [x] **M1** — Scaffold + wallet connect on Amoy
+- [x] **M2** — Escrow contract: states, events, SafeERC20, reentrancy guard, 6 tests, deploy script
+- [x] **M3** — Frontend flows (create → screen → fund → submit doc → release) + dashboard
+- [x] **M4** — Design system (lantern theme, khatam/mashrabiya motifs, RTL, halal framing)
+- [x] **M5** — Seed escrows + [2-minute demo script](./DEMO.md)
+
+See **[DEMO.md](./DEMO.md)** for the full deploy → seed → demo walkthrough.
 
 ## Run it
 
@@ -35,10 +37,19 @@ Injected wallets (MetaMask) work without a WalletConnect project id; the id is o
 cd contracts
 npm install
 npm run compile
+npm test                          # 6 passing lifecycle/guard tests
+cp .env.example .env              # PRIVATE_KEY (importer) + AMOY_RPC_URL
+npm run deploy:amoy               # deploys AEDx + Escrow, writes addresses + ABIs into web/
+EXPORTER_ADDRESS=0x… npm run seed:amoy   # seeds 2 demo escrows
 ```
+
+> **Offline solc:** this environment blocks the solc binary host, so the Hardhat
+> compiler cache is pre-seeded from the npm `solc` package. On a normal machine
+> Hardhat downloads solc itself — no action needed.
 
 ## Notes
 
 - **Target chain:** Polygon Amoy (chainId `80002`). The demo stablecoin is `AEDx`, a freely-mintable mock ERC-20 — **not** a real stablecoin.
-- **Scope guardrails:** Qafila is *not* a stablecoin issuer, settlement rail, KYC product, or duplicate-financing registry. Counterparty screening will stand on the OpenSanctions match API (M3).
+- **Scope guardrails:** Qafila is *not* a stablecoin issuer, settlement rail, KYC product, or duplicate-financing registry. Counterparty screening stands on the OpenSanctions match API (`OPENSANCTIONS_API_KEY`), with a deterministic offline stub for demos.
+- **Screening & docs:** counterparty names are screened server-side via `/api/screen`; shipment documents are hashed client-side (keccak256) and only the hash goes on-chain.
 - **Arabic copy** in `web/messages/ar.json` is a **placeholder pending native-speaker review** — not final, not machine-translation-approved for production.
