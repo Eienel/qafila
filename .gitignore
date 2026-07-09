@@ -1,0 +1,18 @@
+# deps
+node_modules/
+**/node_modules/
+# next
+web/.next/
+web/out/
+# hardhat
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+# env
+.env
+.env*.local
+# misc
+.DS_Store
+*.log
+web/next-env.d.ts
+web/*.tsbuildinfo

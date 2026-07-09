@@ -1,0 +1,19 @@
+{
+  "meta": { "title": "Qafila — the letter of credit, without the bank" },
+  "nav": { "connect": "Connect Wallet", "dashboard": "Dashboard" },
+  "hero": {
+    "title": "The letter of credit, without the bank.",
+    "subtitle": "Lock stablecoin in escrow on Polygon. Your overseas supplier is paid the moment shipment is proven — no bank, no 7–10-day wait.",
+    "cta": "Connect Wallet",
+    "network": "Running on Polygon Amoy testnet"
+  },
+  "how": {
+    "title": "How it works",
+    "step1Title": "Fund escrow",
+    "step1Body": "The importer locks stablecoin in a smart-contract escrow — held in trust (amana), not sent.",
+    "step2Title": "Prove shipment",
+    "step2Body": "The exporter submits the agreed shipping document. Its hash is checked on-chain.",
+    "step3Title": "Funds release",
+    "step3Body": "On proof, the escrow releases funds to the exporter automatically. The light passes."
+  }
+}
