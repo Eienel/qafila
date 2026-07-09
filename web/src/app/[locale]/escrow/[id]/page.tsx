@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import { Link } from "@/i18n/routing";
@@ -65,9 +66,21 @@ export default function EscrowPage() {
           </div>
 
           {trade.state === "Released" && (
-            <div className="card border-success/40 bg-success/5">
-              <p className="text-sm font-medium text-success">✓ {t("released")}</p>
-            </div>
+            <motion.div
+              className="card relative overflow-hidden border-success/40 bg-success/5"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              {/* the light "passes" to the exporter */}
+              <motion.div
+                aria-hidden
+                className="absolute inset-y-0 w-24 bg-gradient-to-r from-transparent via-gold-glow/30 to-transparent"
+                initial={{ x: "-30%" }}
+                animate={{ x: "130%" }}
+                transition={{ duration: 1.1, ease: "easeInOut" }}
+              />
+              <p className="relative text-sm font-medium text-success">✓ {t("released")}</p>
+            </motion.div>
           )}
 
           <div className="card">
