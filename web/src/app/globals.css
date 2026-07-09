@@ -25,3 +25,29 @@ body {
     transparent 55%
   );
 }
+
+@layer components {
+  .input {
+    @apply w-full rounded-md border border-[rgba(212,175,55,0.18)] bg-surface-2 px-3 py-2 text-sm text-text
+      outline-none transition-colors placeholder:text-text-dim/60 focus:border-gold/60;
+  }
+  .btn-gold {
+    @apply rounded-md bg-gold px-4 py-2 text-sm font-medium text-bg transition-opacity hover:opacity-90
+      disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-ghost {
+    @apply rounded-md border border-[rgba(212,175,55,0.18)] px-4 py-2 text-sm text-text-dim transition-colors
+      hover:text-text disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .card {
+    @apply rounded-xl border border-[rgba(212,175,55,0.18)] bg-surface p-5;
+  }
+}
+
+/* Mashrabiya lattice panel — the "funds held in trust" motif. */
+.mashrabiya {
+  background-color: #141416;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212, 175, 55, 0.06) 0 1px, transparent 1px 12px),
+    repeating-linear-gradient(-45deg, rgba(212, 175, 55, 0.06) 0 1px, transparent 1px 12px);
+}

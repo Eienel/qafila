@@ -1,10 +1,11 @@
 {
   "meta": { "title": "Qafila — the letter of credit, without the bank" },
-  "nav": { "connect": "Connect Wallet", "dashboard": "Dashboard" },
+  "nav": { "connect": "Connect Wallet", "dashboard": "Dashboard", "home": "Home" },
   "hero": {
     "title": "The letter of credit, without the bank.",
     "subtitle": "Lock stablecoin in escrow on Polygon. Your overseas supplier is paid the moment shipment is proven — no bank, no 7–10-day wait.",
     "cta": "Connect Wallet",
+    "enter": "Open dashboard",
     "network": "Running on Polygon Amoy testnet"
   },
   "how": {
@@ -15,5 +16,79 @@
     "step2Body": "The exporter submits the agreed shipping document. Its hash is checked on-chain.",
     "step3Title": "Funds release",
     "step3Body": "On proof, the escrow releases funds to the exporter automatically. The light passes."
-  }
+  },
+  "screening": {
+    "checking": "Screening counterparty…",
+    "clear": "Screened — clear",
+    "review": "Screened — review",
+    "note": "Counterparty screening via OpenSanctions."
+  },
+  "lifecycle": {
+    "Created": "Created",
+    "Funded": "Funded",
+    "Shipped": "Shipped",
+    "Released": "Released",
+    "Refunded": "Refunded to importer",
+    "Disputed": "Disputed — on hold"
+  },
+  "dashboard": {
+    "title": "Trade escrows",
+    "subtitle": "Your funds are held in trust and released only on proof.",
+    "new": "New escrow",
+    "empty": "No escrows yet. Create one to begin.",
+    "connectFirst": "Connect your wallet to view escrows.",
+    "role": { "importer": "You are the importer", "exporter": "You are the exporter" },
+    "notDeployed": "Contracts are not deployed yet. Run the deploy script and set the addresses."
+  },
+  "create": {
+    "title": "New trade escrow",
+    "counterpartyName": "Supplier / counterparty name",
+    "counterpartyNamePh": "e.g. Emirates Steel Trading LLC",
+    "exporter": "Exporter wallet address",
+    "amount": "Amount (AEDx)",
+    "mode": "Release condition",
+    "modeHash": "Agreed shipment-document hash",
+    "modeConfirm": "Importer confirms manually",
+    "docFile": "Agreed document (hashed locally)",
+    "docHash": "Document hash",
+    "deadline": "Refund deadline",
+    "screen": "Screen counterparty",
+    "submit": "Create escrow",
+    "creating": "Creating…",
+    "created": "Escrow created",
+    "needScreen": "Screen the counterparty before creating."
+  },
+  "escrow": {
+    "title": "Escrow",
+    "importer": "Importer",
+    "exporter": "Exporter",
+    "amount": "Amount",
+    "condition": "Release condition",
+    "conditionHash": "Doc-hash match",
+    "conditionConfirm": "Importer confirms",
+    "deadline": "Refund deadline",
+    "agreedHash": "Agreed hash",
+    "submittedHash": "Submitted hash",
+    "fund": "Fund escrow",
+    "funding": "Funding…",
+    "approve": "Approve AEDx",
+    "approving": "Approving…",
+    "uploadDoc": "Upload shipment document",
+    "submitDoc": "Submit document hash",
+    "submitting": "Submitting…",
+    "release": "Confirm & release",
+    "releasing": "Releasing…",
+    "refund": "Refund",
+    "refunding": "Refunding…",
+    "dispute": "Dispute",
+    "disputing": "Disputing…",
+    "released": "Funds released to exporter",
+    "receipt": "Receipt",
+    "txHash": "Transaction",
+    "viewOnExplorer": "View on Amoy explorer",
+    "autoReleaseNote": "Matching hash releases funds automatically.",
+    "faucet": "Get test AEDx",
+    "back": "Back to dashboard"
+  },
+  "common": { "loading": "Loading…", "cancel": "Cancel", "close": "Close" }
 }

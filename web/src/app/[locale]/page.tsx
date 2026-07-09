@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 import { LocaleToggle } from "@/components/LocaleToggle";
 import { WalletConnect } from "@/components/ConnectButton";
 import { Lantern } from "@/components/Lantern";
@@ -33,7 +34,12 @@ export default function Home() {
           {t("hero.subtitle")}
         </p>
         <div className="flex flex-col items-center gap-3">
-          <WalletConnect />
+          <div className="flex items-center gap-3">
+            <WalletConnect />
+            <Link href="/app" className="btn-ghost">
+              {t("hero.enter")}
+            </Link>
+          </div>
           <span className="text-xs text-text-dim">{t("hero.network")}</span>
         </div>
       </section>
