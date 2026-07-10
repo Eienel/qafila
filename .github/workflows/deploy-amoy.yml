@@ -20,6 +20,10 @@ on:
         description: "Exporter wallet for seeded escrows (0x...)"
         type: string
         required: false
+      private_key:
+        description: "Testnet-only private key (fallback if AMOY_PRIVATE_KEY secret is unset). Prefer the secret."
+        type: string
+        required: false
 
 permissions:
   contents: write
@@ -30,10 +34,17 @@ jobs:
     defaults:
       run:
         working-directory: contracts
+    env:
+      # Input wins if provided, else the repo secret. Masked below regardless.
+      PRIVATE_KEY: ${{ inputs.private_key != '' && inputs.private_key || secrets.AMOY_PRIVATE_KEY }}
+      AMOY_RPC_URL: ${{ vars.AMOY_RPC_URL }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
+
+      - name: Mask private key in logs
+        run: echo "::add-mask::$PRIVATE_KEY"
 
       - uses: actions/setup-node@v4
         with:
@@ -45,16 +56,11 @@ jobs:
       - run: npm run compile
 
       - name: Deploy AEDx + Escrow
-        env:
-          PRIVATE_KEY: ${{ secrets.AMOY_PRIVATE_KEY }}
-          AMOY_RPC_URL: ${{ vars.AMOY_RPC_URL }}
         run: npm run deploy:amoy
 
       - name: Seed demo escrows
         if: ${{ inputs.seed }}
         env:
-          PRIVATE_KEY: ${{ secrets.AMOY_PRIVATE_KEY }}
-          AMOY_RPC_URL: ${{ vars.AMOY_RPC_URL }}
           EXPORTER_ADDRESS: ${{ inputs.exporter_address }}
         run: npm run seed:amoy
 
