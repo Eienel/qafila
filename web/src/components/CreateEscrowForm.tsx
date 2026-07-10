@@ -106,6 +106,9 @@ export function CreateEscrowForm({ onDone }: { onDone: () => void }) {
             {t("modeConfirm")}
           </ModeBtn>
         </div>
+        <p className="mt-2 text-xs leading-relaxed text-text-dim">
+          {mode === "hash" ? t("modeHashHelp") : t("modeConfirmHelp")}
+        </p>
       </Field>
 
       {mode === "hash" && (

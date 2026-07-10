@@ -104,6 +104,8 @@
     "mode": "Release condition",
     "modeHash": "Agreed shipment-document hash",
     "modeConfirm": "Importer confirms manually",
+    "modeHashHelp": "Instant, tamper-proof release the moment the agreed file is submitted. It proves the exporter holds the agreed document, not that goods physically shipped.",
+    "modeConfirmHelp": "You release the funds manually once you are satisfied the goods shipped. Slower, but your own judgment is the check.",
     "docFile": "Agreed document (hashed locally)",
     "docHash": "Document hash",
     "deadline": "Refund deadline",

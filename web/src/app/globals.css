@@ -30,43 +30,64 @@ body {
 }
 
 @layer components {
+  /* Shared button physics: lift on hover, tactile press on active. */
+  .btn-base {
+    @apply relative inline-flex select-none items-center justify-center gap-2 rounded-full
+      transition-[transform,box-shadow,background-color,border-color,filter] duration-200
+      ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform
+      hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97]
+      disabled:pointer-events-none disabled:translate-y-0 disabled:opacity-50;
+  }
   /* Primary CTA on LIGHT surfaces — ink pill, cream label (reference look). */
   .btn-dark {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-ink px-6 py-3 text-sm font-medium
-      text-canvas transition-all duration-200 hover:bg-ink/90 active:translate-y-px
-      disabled:cursor-not-allowed disabled:opacity-50;
+    @apply btn-base bg-ink px-6 py-3 text-sm font-medium text-canvas
+      shadow-[0_6px_20px_-8px_rgba(23,19,13,0.5)] hover:bg-ink/95
+      hover:shadow-[0_14px_30px_-10px_rgba(23,19,13,0.55)];
   }
   /* Secondary on LIGHT surfaces — hairline outline. */
   .btn-line {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-ink/20 px-6 py-3 text-sm
-      font-medium text-ink transition-all duration-200 hover:border-ink/40 hover:bg-ink/[0.03]
-      active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50;
+    @apply btn-base border border-ink/20 px-6 py-3 text-sm font-medium text-ink
+      hover:border-ink/40 hover:bg-ink/[0.04];
   }
-  /* Primary CTA on DARK surfaces / app — gold. */
+  /* Primary CTA on DARK surfaces / app — gold, with a lit glow on hover. */
   .btn-gold {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-b from-gold-glow to-gold
-      px-5 py-2.5 text-sm font-semibold text-night shadow-gold-cta transition-all duration-200
-      hover:brightness-105 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50
-      disabled:shadow-none;
+    @apply btn-base bg-gradient-to-b from-gold-glow to-gold px-5 py-2.5 text-sm font-semibold
+      text-night shadow-gold-cta hover:brightness-[1.06]
+      hover:shadow-[0_16px_40px_-10px_rgba(241,212,138,0.6)] disabled:shadow-none;
   }
   /* Secondary on DARK surfaces / app. */
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-gold/25 px-5 py-2.5 text-sm
-      text-mist-dim transition-colors duration-200 hover:border-gold/50 hover:text-mist
-      disabled:cursor-not-allowed disabled:opacity-50;
+    @apply btn-base border border-gold/25 px-5 py-2.5 text-sm text-mist-dim
+      hover:border-gold/50 hover:text-mist hover:bg-gold/[0.04];
   }
   /* Dark app form input. */
   .input {
     @apply w-full rounded-lg border border-gold/[0.15] bg-night-3 px-3.5 py-2.5 text-sm text-mist
       outline-none transition-colors placeholder:text-mist-dim/50 focus:border-gold/60;
   }
-  /* Dark app card. */
+  /* Dark app card with a soft hover lift. */
   .card {
-    @apply rounded-2xl border border-gold/[0.12] bg-night-2 p-5;
+    @apply rounded-2xl border border-gold/[0.12] bg-night-2 p-5 transition-all duration-300
+      ease-[cubic-bezier(0.16,1,0.3,1)];
   }
   .eyebrow {
     @apply text-xs font-medium uppercase tracking-[0.2em] text-gold-deep;
   }
+}
+
+/* Content fade-in used by app pages that have no scroll-reveal of their own. */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-up {
+  animation: fade-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 /* Mashrabiya lattice — the "funds held in trust" motif. */

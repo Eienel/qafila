@@ -10,7 +10,10 @@ import { formatAmount, shortAddr } from "@/lib/format";
 export function EscrowCard({ trade, role }: { trade: TradeView; role?: "importer" | "exporter" }) {
   const t = useTranslations("escrow");
   return (
-    <Link href={`/escrow/${trade.id}`} className="card block transition-colors hover:border-gold/40">
+    <Link
+      href={`/escrow/${trade.id}`}
+      className="card block hover:-translate-y-1 hover:border-gold/40 hover:shadow-lantern-sm"
+    >
       <div className="mb-4 flex items-start justify-between">
         <div>
           <p className="text-xs text-text-dim">

@@ -19,7 +19,7 @@ A "smart-contract letter of credit" built for the Polygon *Smart Commerce Infras
 - [x] **M4** — Design system (lantern theme, khatam/mashrabiya motifs, RTL, halal framing)
 - [x] **M5** — Seed escrows + [2-minute demo script](./DEMO.md)
 
-See **[DEMO.md](./DEMO.md)** for the full deploy → seed → demo walkthrough.
+See **[DEMO.md](./DEMO.md)** for the full deploy → seed → demo walkthrough, and **[ROADMAP.md](./ROADMAP.md)** (browsable page in [`/docs`](./docs/index.html)) for where this is going.
 
 ## Run it
 

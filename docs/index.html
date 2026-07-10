@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Qafila — Roadmap</title>
+    <meta
+      name="description"
+      content="Qafila roadmap: from a smart-contract escrow MVP to real shipment-proof oracles and licensed AED stablecoin rails."
+    />
+    <style>
+      :root {
+        --canvas: #f5f1e8;
+        --canvas-2: #efe8d9;
+        --ink: #17130d;
+        --ink-dim: #6b6254;
+        --gold: #c79a3b;
+        --gold-deep: #8a6416;
+        --night: #0b0b0c;
+        --border: rgba(199, 154, 59, 0.28);
+      }
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: "Georgia", "Times New Roman", serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .sans {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      }
+      .wrap { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+      header.hero {
+        background:
+          radial-gradient(70% 120% at 80% -10%, rgba(241, 212, 138, 0.35), transparent 60%),
+          var(--canvas);
+        border-bottom: 1px solid var(--border);
+        padding: 72px 0 56px;
+      }
+      .brand { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+      .brand span { color: var(--gold-deep); }
+      .eyebrow {
+        font-family: -apple-system, sans-serif;
+        font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase;
+        color: var(--gold-deep); margin: 40px 0 12px;
+      }
+      h1 { font-size: 46px; line-height: 1.05; margin: 0 0 16px; font-weight: 600; }
+      .lede {
+        font-family: -apple-system, sans-serif;
+        font-size: 18px; line-height: 1.6; color: var(--ink-dim); max-width: 42rem; margin: 0;
+      }
+      .status-row {
+        display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px;
+        font-family: -apple-system, sans-serif; font-size: 13px;
+      }
+      .chip {
+        border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; color: var(--ink-dim);
+      }
+      .chip strong { color: var(--ink); }
+      main { padding: 24px 0 8px; }
+      section.phase { padding: 40px 0; border-bottom: 1px solid rgba(23, 19, 13, 0.08); }
+      .phase-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+      .phase-q {
+        font-family: -apple-system, sans-serif; font-size: 12px; font-weight: 600;
+        letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-deep);
+      }
+      .phase h2 { font-size: 30px; margin: 6px 0 4px; font-weight: 600; }
+      .phase .goal { font-family: -apple-system, sans-serif; color: var(--ink-dim); margin: 0 0 20px; }
+      ul.items { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+      ul.items li {
+        font-family: -apple-system, sans-serif; font-size: 15px; line-height: 1.5;
+        padding-left: 26px; position: relative; color: var(--ink);
+      }
+      ul.items li::before {
+        content: ""; position: absolute; left: 4px; top: 8px; width: 8px; height: 8px;
+        border-radius: 2px; transform: rotate(45deg); background: var(--gold);
+      }
+      li .note { color: var(--ink-dim); }
+      .done ul.items li::before { background: #2fb380; }
+      .tag {
+        display: inline-block; font-family: -apple-system, sans-serif; font-size: 11px;
+        border: 1px solid var(--border); border-radius: 6px; padding: 1px 7px; margin-left: 8px;
+        color: var(--gold-deep); vertical-align: middle;
+      }
+      .callout {
+        background: var(--night); color: #f4f1ea; border-radius: 20px; padding: 32px 28px; margin: 44px 0;
+      }
+      .callout h3 { margin: 0 0 10px; font-size: 22px; color: #f1d48a; }
+      .callout p { font-family: -apple-system, sans-serif; color: #a69e8d; line-height: 1.6; margin: 0; }
+      .nongoals { background: var(--canvas-2); border-radius: 20px; padding: 28px; margin: 24px 0; }
+      .nongoals h3 { margin: 0 0 8px; font-size: 20px; }
+      .nongoals p { font-family: -apple-system, sans-serif; color: var(--ink-dim); line-height: 1.6; margin: 0; }
+      footer { border-top: 1px solid var(--border); padding: 32px 0 60px; }
+      footer .sources { font-family: -apple-system, sans-serif; font-size: 13px; color: var(--ink-dim); line-height: 1.9; }
+      footer a { color: var(--gold-deep); }
+      .foot-note { font-family: -apple-system, sans-serif; font-size: 12px; color: var(--ink-dim); margin-top: 24px; }
+      @media (max-width: 640px) { h1 { font-size: 34px; } .phase h2 { font-size: 24px; } }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="wrap">
+        <div class="brand">Qafila <span>قافلة</span></div>
+        <div class="eyebrow">Product Roadmap · updated Jul 2026</div>
+        <h1>From a working escrow to trustless proof of shipment.</h1>
+        <p class="lede">
+          Qafila turns the letter of credit into a smart contract: an importer locks
+          stablecoin in escrow on Polygon, and the supplier is paid the moment an agreed
+          condition is met. This roadmap is honest about the one hard part — proving
+          physical shipment — and lays out how we close it.
+        </p>
+        <div class="status-row">
+          <span class="chip"><strong>Live:</strong> Polygon Amoy testnet</span>
+          <span class="chip"><strong>Contract:</strong> Escrow + AEDx (mock)</span>
+          <span class="chip"><strong>UI:</strong> EN / AR, full RTL</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="wrap">
+      <!-- NOW -->
+      <section class="phase done">
+        <div class="phase-head">
+          <div>
+            <div class="phase-q">Shipped · Q3 2026 — MVP</div>
+            <h2>The escrow works, end to end.</h2>
+          </div>
+        </div>
+        <p class="goal">A funded conditional escrow between two wallets, demoable in two minutes.</p>
+        <ul class="items">
+          <li>Solidity escrow: Created → Funded → Shipped → Released, plus Refunded / Disputed. SafeERC20, reentrancy guard, only-party access, an event at every step.</li>
+          <li>Two release conditions: <strong>agreed document hash</strong> (instant auto-release) and <strong>importer confirms</strong> (human check).</li>
+          <li>Counterparty screening via the OpenSanctions match API before an escrow is created.</li>
+          <li>Client-side keccak256 document hashing; only the hash goes on-chain.</li>
+          <li>Bilingual EN / AR interface with full right-to-left support and a lantern lifecycle view.</li>
+          <li>Mock <strong>AEDx</strong> ERC-20 stablecoin for the testnet demo.</li>
+        </ul>
+      </section>
+
+      <!-- Q4 2026 -->
+      <section class="phase">
+        <div class="phase-q">Q4 2026 — Trust &amp; clarity</div>
+        <h2>Make each side feel safe.</h2>
+        <p class="goal">Sharpen the two-sided experience and take the first real step past the doc-hash handshake.</p>
+        <ul class="items">
+          <li>Role-filtered dashboard: separate importer and exporter inboxes so each party sees only their deals.</li>
+          <li><strong>Signed carrier attestation</strong> release <span class="tag">first oracle step</span>: the contract verifies a shipping party's cryptographic signature instead of a static file hash.</li>
+          <li>Encrypted document storage on IPFS / web3.storage, not just the on-chain hash.</li>
+          <li>Milestone / partial releases (deposit on shipment, balance on delivery).</li>
+          <li>Verified contract source on Polygonscan and a first external security review.</li>
+        </ul>
+      </section>
+
+      <!-- Q1 2027 -->
+      <section class="phase">
+        <div class="phase-q">Q1 2027 — Real shipment proof</div>
+        <h2>Close the oracle gap.</h2>
+        <p class="goal">Replace "a file both sides hold" with data from a party that actually knows the goods moved.</p>
+        <ul class="items">
+          <li>Integrate the <strong>electronic Bill of Lading (eBL)</strong> using DCSA standards and the MLETR legal framework, so an issued or surrendered eBL is a verifiable event. <span class="note">(eBL adoption ~11% in 2025, DCSA targeting 100% by 2030.)</span></li>
+          <li><strong>Chainlink Functions</strong> to read eBL and logistics-platform state and auto-release on a genuine shipment event.</li>
+          <li>Multi-document conditions: invoice + Bill of Lading + inspection certificate, each verifiable.</li>
+          <li>Optional IoT / port "gate-out" signals for higher-value lanes.</li>
+        </ul>
+      </section>
+
+      <!-- Q2 2027 -->
+      <section class="phase">
+        <div class="phase-q">Q2 2027 — Compliant money &amp; scale</div>
+        <h2>Real dirhams, real volume.</h2>
+        <p class="goal">Swap the mock token for regulated rails and open to non-crypto SMEs.</p>
+        <ul class="items">
+          <li>Settle in a <strong>CBUAE-licensed AED payment token</strong> under the Payment Token Services Regulation, replacing mock AEDx. <span class="note">(RAKBANK AED stablecoin approved in-principle Jan 2026; sovereign dirham stablecoin live; Digital Dirham CBDC launched Dec 2025.)</span></li>
+          <li>Fiat on / off-ramp so an importer never has to think about crypto.</li>
+          <li>Dispute-resolution and arbitration module for the Disputed state.</li>
+          <li>Security audit and mainnet (Polygon PoS) launch.</li>
+        </ul>
+      </section>
+
+      <div class="callout">
+        <h3>The honest frontier</h3>
+        <p>
+          A keccak256 document match proves the exporter <em>holds an agreed file</em>, not that
+          goods physically shipped. That is the oracle problem, and no MVP solves it trustlessly.
+          Our edge is being explicit about it and standing on real verification (eBL, carrier
+          signatures, licensed oracles) rather than pretending a hash already solves shipment proof.
+        </p>
+      </div>
+
+      <div class="nongoals">
+        <h3>What we deliberately do not build</h3>
+        <p>
+          We stand on incumbents instead of rebuilding them: not a stablecoin issuer (banks and
+          CBUAE-licensed issuers), not a settlement rail, not a KYC / identity product, not a
+          duplicate-financing registry. Our focus is the SME-facing escrow experience and the
+          UAE stablecoin / halal framing on top of existing verification.
+        </p>
+      </div>
+
+      <div class="nongoals" style="background: transparent; border: 1px solid var(--border);">
+        <h3>Phase 2 (parked, not now)</h3>
+        <p>
+          A tokenized shared-loyalty module for the same SME network, and invoice financing built
+          on top of an escrow's on-chain track record.
+        </p>
+      </div>
+    </main>
+
+    <footer class="wrap">
+      <div class="phase-q">References</div>
+      <div class="sources">
+        · Electronic bill of lading &amp; MLETR — <a href="https://dcsa.org/standards/bill-of-lading">DCSA eBL standard</a>,
+        <a href="https://dcsa.org/newsroom/ebl-interoperability-milestone">DCSA interoperability milestone</a><br />
+        · Oracles for trade finance — <a href="https://chain.link/use-cases">Chainlink use cases</a>,
+        <a href="https://docs.chain.link/">Chainlink Functions docs</a><br />
+        · UAE stablecoin rails — <a href="https://rulebook.centralbank.ae/en/rulebook/payment-token-services-regulation">CBUAE Payment Token Services Regulation</a>
+      </div>
+      <p class="foot-note">
+        Qafila is a hackathon build on Polygon Amoy testnet. AEDx is a mock token, not a real
+        stablecoin. Arabic copy is a placeholder pending native-speaker review.
+      </p>
+    </footer>
+  </body>
+</html>

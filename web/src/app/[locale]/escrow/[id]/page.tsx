@@ -21,7 +21,7 @@ export default function EscrowPage() {
   return (
     <div className="min-h-[100dvh] bg-night text-mist">
       <AppHeader />
-      <main className="mx-auto max-w-3xl px-6 pb-20">
+      <main className="mx-auto max-w-3xl px-6 pb-20 animate-fade-up">
       <Link href="/app" className="mt-6 inline-block text-sm text-mist-dim hover:text-mist">
         ← {t("back")}
       </Link>

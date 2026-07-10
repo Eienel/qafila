@@ -29,7 +29,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-[100dvh] bg-night text-mist">
       <AppHeader />
-      <main className="mx-auto max-w-5xl px-6 pb-20">
+      <main className="mx-auto max-w-5xl px-6 pb-20 animate-fade-up">
       <div className="mt-10 flex items-end justify-between">
         <div>
           <h1 className="font-display text-3xl text-mist">{t("title")}</h1>
