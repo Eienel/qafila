@@ -2,7 +2,6 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { SiteNav } from "@/components/SiteNav";
 import { SiteFooter } from "@/components/SiteFooter";
-import { HeroLantern } from "@/components/HeroLantern";
 import { StepFlow } from "@/components/StepFlow";
 import { Reveal } from "@/components/Reveal";
 import { PolygonMark } from "@/components/PolygonMark";
@@ -31,14 +30,31 @@ export default function Home() {
 
   return (
     <div className="grain">
-      <SiteNav />
+      {/* HERO — full-bleed lantern photo, headline over the cream feather */}
+      <section className="relative isolate min-h-[100dvh] overflow-hidden bg-canvas md:min-h-[92vh]">
+        {/* photo: full-bleed on mobile, right panel on desktop (mirrors to the
+            left in RTL so the headline always sits on the cream side) */}
+        <div className="absolute inset-0 md:inset-y-0 md:left-[40%] md:right-0 rtl:md:left-0 rtl:md:right-[40%]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero.png"
+            alt="A lit fanous lantern on the wall of an old Arabian alley at dusk"
+            className="h-full w-full object-cover object-[65%_center] rtl:-scale-x-100"
+          />
+        </div>
+        {/* cream feather: strong on mobile for legibility, subtle blend on desktop */}
+        <div className="absolute inset-0 bg-gradient-to-r from-canvas from-40% via-canvas/85 via-60% to-canvas/30 md:via-canvas/50 md:via-52% md:to-transparent md:to-78% rtl:bg-gradient-to-l" />
+        {/* top scrim so the transparent nav stays legible */}
+        <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-canvas/85 to-transparent" />
+        {/* bottom fade into the next section */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-canvas to-transparent" />
 
-      {/* HERO — dawn (light) */}
-      <section className="relative overflow-hidden bg-canvas">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-6 pb-24 pt-16 md:grid-cols-2 md:pb-32 md:pt-24">
-          <Reveal>
+        <SiteNav />
+
+        <div className="relative z-10 mx-auto flex min-h-[100dvh] max-w-6xl items-center px-6 pt-24 pb-28 md:min-h-[92vh]">
+          <Reveal className="max-w-xl">
             <p className="eyebrow mb-5">{t("hero.kicker")}</p>
-            <h1 className="font-display text-5xl leading-[1.05] text-ink md:text-7xl">
+            <h1 className="font-display text-5xl leading-[1.03] text-ink md:text-7xl">
               {t("hero.title")}
             </h1>
             <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-dim">
@@ -57,10 +73,6 @@ export default function Home() {
               <span>{t("hero.builtOn")}</span>
               <PolygonMark className="h-5 text-ink" />
             </div>
-          </Reveal>
-
-          <Reveal delay={0.15} className="relative">
-            <HeroLantern />
           </Reveal>
         </div>
       </section>

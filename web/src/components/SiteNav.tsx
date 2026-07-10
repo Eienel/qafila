@@ -15,8 +15,8 @@ export function SiteNav() {
   ];
 
   return (
-    <header className="sticky top-0 z-40 border-b border-ink/10 bg-canvas/80 backdrop-blur-md">
-      <nav className="mx-auto flex h-[68px] max-w-6xl items-center justify-between px-6">
+    <header className="absolute inset-x-0 top-0 z-50">
+      <nav className="mx-auto flex h-[72px] max-w-6xl items-center justify-between px-6">
         <Link href="/" className="font-display text-2xl font-semibold text-ink">
           Qafila
         </Link>
