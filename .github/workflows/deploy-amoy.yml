@@ -58,13 +58,16 @@ jobs:
       - name: Deploy AEDx + Escrow
         run: npm run deploy:amoy
 
+      # Seeding is optional and must never block saving the deployed addresses.
       - name: Seed demo escrows
         if: ${{ inputs.seed }}
+        continue-on-error: true
         env:
           EXPORTER_ADDRESS: ${{ inputs.exporter_address }}
         run: npm run seed:amoy
 
       - name: Commit addresses + ABIs back to main
+        if: always()
         working-directory: .
         run: |
           git config user.name "github-actions[bot]"
