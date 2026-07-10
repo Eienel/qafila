@@ -1,0 +1,81 @@
+name: Deploy to Amoy
+
+# Manual trigger. Deploys AEDx + Escrow to Polygon Amoy, writes the addresses
+# and ABIs into web/src/contracts, and commits them back to main so Vercel
+# rebuilds the frontend against the live contracts.
+#
+# Required repo secret:
+#   AMOY_PRIVATE_KEY  - private key of a funded Amoy wallet (testnet only)
+# Optional repo variable:
+#   AMOY_RPC_URL      - defaults to https://rpc-amoy.polygon.technology
+
+on:
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: "Seed 2 demo escrows after deploy"
+        type: boolean
+        default: true
+      exporter_address:
+        description: "Exporter wallet for seeded escrows (0x...)"
+        type: string
+        required: false
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contracts
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: contracts/package-lock.json
+
+      - run: npm ci
+      - run: npm run compile
+
+      - name: Deploy AEDx + Escrow
+        env:
+          PRIVATE_KEY: ${{ secrets.AMOY_PRIVATE_KEY }}
+          AMOY_RPC_URL: ${{ vars.AMOY_RPC_URL }}
+        run: npm run deploy:amoy
+
+      - name: Seed demo escrows
+        if: ${{ inputs.seed }}
+        env:
+          PRIVATE_KEY: ${{ secrets.AMOY_PRIVATE_KEY }}
+          AMOY_RPC_URL: ${{ vars.AMOY_RPC_URL }}
+          EXPORTER_ADDRESS: ${{ inputs.exporter_address }}
+        run: npm run seed:amoy
+
+      - name: Commit addresses + ABIs back to main
+        working-directory: .
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add web/src/contracts/addresses.json web/src/contracts/*.abi.json
+          if git diff --staged --quiet; then
+            echo "No address changes to commit."
+          else
+            git commit -m "chore: deploy contracts to Amoy, update addresses [skip ci]"
+            git push origin main
+          fi
+
+      - name: Summary
+        working-directory: .
+        run: |
+          echo "### Deployed to Polygon Amoy" >> "$GITHUB_STEP_SUMMARY"
+          echo '```json' >> "$GITHUB_STEP_SUMMARY"
+          cat web/src/contracts/addresses.json >> "$GITHUB_STEP_SUMMARY"
+          echo '```' >> "$GITHUB_STEP_SUMMARY"
+          echo "Vercel will redeploy from the new commit on main." >> "$GITHUB_STEP_SUMMARY"
