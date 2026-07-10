@@ -38,13 +38,16 @@ jobs:
       # Input wins if provided, else the repo secret. Masked below regardless.
       PRIVATE_KEY: ${{ inputs.private_key != '' && inputs.private_key || secrets.AMOY_PRIVATE_KEY }}
       AMOY_RPC_URL: ${{ vars.AMOY_RPC_URL }}
+      POLYGONSCAN_API_KEY: ${{ secrets.POLYGONSCAN_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: main
 
-      - name: Mask private key in logs
-        run: echo "::add-mask::$PRIVATE_KEY"
+      - name: Mask secrets in logs
+        run: |
+          echo "::add-mask::$PRIVATE_KEY"
+          [ -n "$POLYGONSCAN_API_KEY" ] && echo "::add-mask::$POLYGONSCAN_API_KEY" || true
 
       - uses: actions/setup-node@v4
         with:
@@ -65,6 +68,12 @@ jobs:
         env:
           EXPORTER_ADDRESS: ${{ inputs.exporter_address }}
         run: npm run seed:amoy
+
+      # Verify on Polygonscan when a key is available; never block the run.
+      - name: Verify on Polygonscan
+        if: ${{ env.POLYGONSCAN_API_KEY != '' }}
+        continue-on-error: true
+        run: npm run verify:amoy
 
       - name: Commit addresses + ABIs back to main
         if: always()

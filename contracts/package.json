@@ -6,7 +6,8 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "deploy:amoy": "hardhat run scripts/deploy.ts --network amoy",
-    "seed:amoy": "hardhat run scripts/seed.ts --network amoy"
+    "seed:amoy": "hardhat run scripts/seed.ts --network amoy",
+    "verify:amoy": "hardhat run scripts/verify.ts --network amoy"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

@@ -6,6 +6,8 @@ dotenv.config();
 
 const AMOY_RPC_URL = process.env.AMOY_RPC_URL || "https://rpc-amoy.polygon.technology";
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
+// Polygonscan (or unified Etherscan v2) API key for source verification.
+const POLYGONSCAN_API_KEY = process.env.POLYGONSCAN_API_KEY || "";
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -20,6 +22,19 @@ const config: HardhatUserConfig = {
       chainId: 80002,
       accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
     },
+  },
+  etherscan: {
+    apiKey: { polygonAmoy: POLYGONSCAN_API_KEY },
+    customChains: [
+      {
+        network: "polygonAmoy",
+        chainId: 80002,
+        urls: {
+          apiURL: "https://api-amoy.polygonscan.com/api",
+          browserURL: "https://amoy.polygonscan.com",
+        },
+      },
+    ],
   },
 };
 

@@ -1,0 +1,39 @@
+name: Verify on Polygonscan
+
+# Verifies the currently-deployed AEDx + Escrow (addresses read from
+# web/src/contracts/addresses.json on main) on Amoy Polygonscan.
+#
+# Provide the API key EITHER as repo secret POLYGONSCAN_API_KEY or as the
+# api_key input below. Get a free key at https://polygonscan.com/myapikey
+# (or a unified key at https://etherscan.io/myapikey).
+
+on:
+  workflow_dispatch:
+    inputs:
+      api_key:
+        description: "Polygonscan API key (fallback if POLYGONSCAN_API_KEY secret is unset)"
+        type: string
+        required: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contracts
+    env:
+      POLYGONSCAN_API_KEY: ${{ inputs.api_key != '' && inputs.api_key || secrets.POLYGONSCAN_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Mask API key
+        run: echo "::add-mask::$POLYGONSCAN_API_KEY"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: contracts/package-lock.json
+      - run: npm ci
+      - run: npm run compile
+      - run: npm run verify:amoy
