@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useWriteContract, useWaitForTransactionReceipt } from "wagmi";
-import { escrowAbi, ESCROW_ADDRESS, AEDX_ADDRESS } from "@/contracts";
+import { escrowAbi, ESCROW_ADDRESS } from "@/contracts";
+import { TOKENS, DEFAULT_TOKEN } from "@/contracts/tokens";
 import { screenCounterparty, type ScreeningVerdict } from "@/lib/screening";
 import { hashFile } from "@/lib/hash";
 import { parseAmount } from "@/lib/format";
@@ -15,6 +16,7 @@ export function CreateEscrowForm({ onDone }: { onDone: () => void }) {
   const tc = useTranslations("common");
   const [name, setName] = useState("");
   const [exporter, setExporter] = useState("");
+  const [token, setToken] = useState(DEFAULT_TOKEN);
   const [amount, setAmount] = useState("1000");
   const [mode, setMode] = useState<"hash" | "confirm">("hash");
   const [docHash, setDocHash] = useState<`0x${string}`>(zeroHash);
@@ -61,7 +63,13 @@ export function CreateEscrowForm({ onDone }: { onDone: () => void }) {
       address: ESCROW_ADDRESS,
       abi: escrowAbi as any,
       functionName: "createTrade",
-      args: [exporter as `0x${string}`, AEDX_ADDRESS, parseAmount(amount), required, deadlineTs],
+      args: [
+        exporter as `0x${string}`,
+        token.address,
+        parseAmount(amount, token.decimals),
+        required,
+        deadlineTs,
+      ],
     });
   }
 
@@ -93,7 +101,20 @@ export function CreateEscrowForm({ onDone }: { onDone: () => void }) {
         <input className="input" placeholder="0x…" value={exporter} onChange={(e) => setExporter(e.target.value)} />
       </Field>
 
-      <Field label={t("amount")}>
+      <Field label={t("stablecoin")}>
+        <div className="flex gap-2">
+          {TOKENS.map((tk) => (
+            <ModeBtn key={tk.address} active={token.address === tk.address} onClick={() => setToken(tk)}>
+              {tk.symbol}
+            </ModeBtn>
+          ))}
+        </div>
+        <p className="mt-2 text-xs text-text-dim">
+          {token.mintable ? t("stablecoinMock") : t("stablecoinReal")}
+        </p>
+      </Field>
+
+      <Field label={`${t("amount")} (${token.symbol})`}>
         <input className="input" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value)} />
       </Field>
 

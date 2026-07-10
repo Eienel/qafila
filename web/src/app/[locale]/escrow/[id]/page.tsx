@@ -10,6 +10,7 @@ import { LanternLifecycle } from "@/components/LanternLifecycle";
 import { EscrowActions } from "@/components/EscrowActions";
 import { useEscrow } from "@/hooks/useEscrows";
 import { formatAmount, shortAddr, AMOY_EXPLORER } from "@/lib/format";
+import { tokenFor } from "@/contracts/tokens";
 import { zeroHash } from "viem";
 
 export default function EscrowPage() {
@@ -36,7 +37,8 @@ export default function EscrowPage() {
                 {t("title")} #{trade.id}
               </p>
               <p className="mt-1 text-4xl font-semibold text-text-hi">
-                {formatAmount(trade.amount)} <span className="text-lg text-gold">AEDx</span>
+                {formatAmount(trade.amount, tokenFor(trade.token).decimals)}{" "}
+                <span className="text-lg text-gold">{tokenFor(trade.token).symbol}</span>
               </p>
             </div>
             <StatusChip state={trade.state} />

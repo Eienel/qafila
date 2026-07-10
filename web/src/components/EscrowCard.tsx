@@ -6,9 +6,11 @@ import type { TradeView } from "@/hooks/useEscrows";
 import { StatusChip } from "./StatusChip";
 import { LanternLifecycle } from "./LanternLifecycle";
 import { formatAmount, shortAddr } from "@/lib/format";
+import { tokenFor } from "@/contracts/tokens";
 
 export function EscrowCard({ trade, role }: { trade: TradeView; role?: "importer" | "exporter" }) {
   const t = useTranslations("escrow");
+  const token = tokenFor(trade.token);
   return (
     <Link
       href={`/escrow/${trade.id}`}
@@ -20,7 +22,8 @@ export function EscrowCard({ trade, role }: { trade: TradeView; role?: "importer
             {t("title")} #{trade.id}
           </p>
           <p className="mt-0.5 text-2xl font-semibold text-text-hi">
-            {formatAmount(trade.amount)} <span className="text-sm text-gold">AEDx</span>
+            {formatAmount(trade.amount, token.decimals)}{" "}
+            <span className="text-sm text-gold">{token.symbol}</span>
           </p>
         </div>
         <StatusChip state={trade.state} />

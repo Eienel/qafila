@@ -1,5 +1,7 @@
 {
-  "meta": { "title": "Qafila - the letter of credit, without the bank" },
+  "meta": {
+    "title": "Qafila - the letter of credit, without the bank"
+  },
   "nav": {
     "connect": "Connect Wallet",
     "dashboard": "Dashboard",
@@ -92,7 +94,10 @@
     "new": "New escrow",
     "empty": "No escrows yet. Create one to begin.",
     "connectFirst": "Connect your wallet to view escrows.",
-    "role": { "importer": "You are the importer", "exporter": "You are the exporter" },
+    "role": {
+      "importer": "You are the importer",
+      "exporter": "You are the exporter"
+    },
     "notDeployed": "Contracts are not deployed yet. Run the deploy script and set the addresses."
   },
   "create": {
@@ -100,7 +105,7 @@
     "counterpartyName": "Supplier / counterparty name",
     "counterpartyNamePh": "e.g. Emirates Steel Trading LLC",
     "exporter": "Exporter wallet address",
-    "amount": "Amount (AEDx)",
+    "amount": "Amount",
     "mode": "Release condition",
     "modeHash": "Agreed shipment-document hash",
     "modeConfirm": "Importer confirms manually",
@@ -113,7 +118,10 @@
     "submit": "Create escrow",
     "creating": "Creating…",
     "created": "Escrow created",
-    "needScreen": "Screen the counterparty before creating."
+    "needScreen": "Screen the counterparty before creating.",
+    "stablecoin": "Stablecoin",
+    "stablecoinMock": "AEDx is a mock dirham-pegged token with a one-click faucet for the demo.",
+    "stablecoinReal": "Circle's real USDC on Polygon Amoy. Get test USDC from the Circle faucet."
   },
   "escrow": {
     "title": "Escrow",
@@ -128,7 +136,7 @@
     "submittedHash": "Submitted hash",
     "fund": "Fund escrow",
     "funding": "Funding…",
-    "approve": "Approve AEDx",
+    "approve": "Approve",
     "approving": "Approving…",
     "uploadDoc": "Upload shipment document",
     "submitDoc": "Submit document hash",
@@ -144,8 +152,13 @@
     "txHash": "Transaction",
     "viewOnExplorer": "View on Amoy explorer",
     "autoReleaseNote": "Matching hash releases funds automatically.",
-    "faucet": "Get test AEDx",
-    "back": "Back to dashboard"
+    "faucet": "Get test",
+    "back": "Back to dashboard",
+    "faucetExternal": "Get test {symbol}"
   },
-  "common": { "loading": "Loading…", "cancel": "Cancel", "close": "Close" }
+  "common": {
+    "loading": "Loading…",
+    "cancel": "Cancel",
+    "close": "Close"
+  }
 }

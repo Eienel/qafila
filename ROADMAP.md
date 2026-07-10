@@ -18,7 +18,7 @@ The escrow works end to end, demoable in two minutes.
 - Counterparty screening via the OpenSanctions match API before an escrow is created.
 - Client-side keccak256 document hashing; only the hash goes on-chain.
 - Bilingual EN/AR interface, full RTL, lantern lifecycle view.
-- Mock **AEDx** ERC-20 stablecoin for the testnet demo.
+- Settles in **real Circle USDC on Amoy** or a mock **AEDx** dirham token (selectable per escrow); the contract accepts any ERC-20.
 
 ## Q4 2026 — Trust & clarity
 

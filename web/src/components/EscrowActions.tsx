@@ -4,7 +4,8 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from "wagmi";
 import { zeroHash } from "viem";
-import { escrowAbi, aedxAbi, ESCROW_ADDRESS, AEDX_ADDRESS } from "@/contracts";
+import { escrowAbi, aedxAbi, ESCROW_ADDRESS } from "@/contracts";
+import { tokenFor } from "@/contracts/tokens";
 import type { TradeView } from "@/hooks/useEscrows";
 import { hashFile } from "@/lib/hash";
 
@@ -32,9 +33,12 @@ export function EscrowActions({ trade, onChange }: { trade: TradeView; onChange:
   }
   const busy = isPending || confirming;
 
-  // Allowance gate for funding.
+  // The stablecoin this escrow actually uses (AEDx, USDC, or any ERC-20).
+  const token = tokenFor(trade.token);
+
+  // Allowance gate for funding (against the escrow's own token).
   const { data: allowance } = useReadContract({
-    address: AEDX_ADDRESS,
+    address: token.address,
     abi: aedxAbi as any,
     functionName: "allowance",
     args: address ? [address, ESCROW_ADDRESS] : undefined,
@@ -60,11 +64,22 @@ export function EscrowActions({ trade, onChange }: { trade: TradeView; onChange:
   // --- CREATED: importer funds (approve → fund) ---
   if (trade.state === "Created" && role === "importer") {
     return (
-      <div className="flex flex-wrap gap-3">
-        {btn(t("faucet"), () => write("mint", [address, trade.amount], AEDX_ADDRESS, aedxAbi), false, "ghost")}
+      <div className="flex flex-wrap items-center gap-3">
+        {token.mintable ? (
+          btn(
+            `${t("faucet")} ${token.symbol}`,
+            () => write("mint", [address, trade.amount], token.address, aedxAbi),
+            false,
+            "ghost"
+          )
+        ) : token.faucetUrl ? (
+          <a href={token.faucetUrl} target="_blank" rel="noreferrer" className="btn-ghost">
+            {t("faucetExternal", { symbol: token.symbol })}
+          </a>
+        ) : null}
         {needsApproval
-          ? btn(busy ? t("approving") : t("approve"), () =>
-              write("approve", [ESCROW_ADDRESS, trade.amount], AEDX_ADDRESS, aedxAbi)
+          ? btn(busy ? t("approving") : `${t("approve")} ${token.symbol}`, () =>
+              write("approve", [ESCROW_ADDRESS, trade.amount], token.address, aedxAbi)
             )
           : btn(busy ? t("funding") : t("fund"), () => write("fund", [BigInt(trade.id)]))}
       </div>
