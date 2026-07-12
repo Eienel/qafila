@@ -19,6 +19,7 @@ The escrow works end to end, demoable in two minutes.
 - Client-side keccak256 document hashing; only the hash goes on-chain.
 - Bilingual EN/AR interface, full RTL, lantern lifecycle view.
 - Settles in **real Circle USDC on Amoy** or a mock **AEDx** dirham token (selectable per escrow); the contract accepts any ERC-20.
+- **On-chain shipment tracking**: the exporter posts milestones (booked → picked up → in transit → customs → out for delivery → delivered) to the trade; each is logged on-chain and rendered as a verifiable timeline. Pure logging — never touches funds or escrow state.
 
 ## Q4 2026 — Trust & clarity
 

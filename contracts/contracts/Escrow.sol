@@ -34,8 +34,20 @@ contract Escrow is ReentrancyGuard {
         State state;
     }
 
+    /// @notice A shipment-tracking checkpoint appended to a trade's timeline.
+    /// @dev Pure logging: milestones never touch funds or the escrow State. The
+    ///      `status` code is interpreted by the frontend (0 Booked, 1 Picked up,
+    ///      2 In transit, 3 At customs, 4 Out for delivery, 5 Delivered, …).
+    struct Milestone {
+        uint8 status;
+        string location;
+        string note;
+        uint64 timestamp;
+    }
+
     uint256 public tradeCount;
     mapping(uint256 => Trade) public trades;
+    mapping(uint256 => Milestone[]) private _milestones;
 
     event TradeCreated(
         uint256 indexed tradeId,
@@ -51,6 +63,14 @@ contract Escrow is ReentrancyGuard {
     event TradeReleased(uint256 indexed tradeId, address indexed exporter, uint256 amount);
     event TradeRefunded(uint256 indexed tradeId, address indexed importer, uint256 amount);
     event TradeDisputed(uint256 indexed tradeId);
+    event MilestonePosted(
+        uint256 indexed tradeId,
+        uint256 indexed index,
+        uint8 status,
+        string location,
+        string note,
+        uint64 timestamp
+    );
 
     error NotImporter();
     error NotExporter();
@@ -189,6 +209,37 @@ contract Escrow is ReentrancyGuard {
     {
         trades[tradeId].state = State.Disputed;
         emit TradeDisputed(tradeId);
+    }
+
+    /// @notice Exporter appends a shipment-tracking milestone to the trade.
+    /// @dev Pure logging — does not move funds or change escrow State. Allowed once
+    ///      the trade is funded and until it reaches a terminal state, so a timeline
+    ///      can be recorded across the Funded → Shipped window (and after auto-release
+    ///      is still blocked, since Released/Refunded/Disputed are terminal for tracking).
+    function postMilestone(
+        uint256 tradeId,
+        uint8 status,
+        string calldata location,
+        string calldata note
+    ) external onlyExporter(tradeId) {
+        State s = trades[tradeId].state;
+        if (s != State.Funded && s != State.Shipped) revert InvalidState();
+
+        uint64 ts = uint64(block.timestamp);
+        _milestones[tradeId].push(
+            Milestone({status: status, location: location, note: note, timestamp: ts})
+        );
+        emit MilestonePosted(tradeId, _milestones[tradeId].length - 1, status, location, note, ts);
+    }
+
+    /// @notice Number of tracking milestones recorded for a trade.
+    function milestoneCount(uint256 tradeId) external view returns (uint256) {
+        return _milestones[tradeId].length;
+    }
+
+    /// @notice Full shipment-tracking timeline for a trade (frontend reads this).
+    function getMilestones(uint256 tradeId) external view returns (Milestone[] memory) {
+        return _milestones[tradeId];
     }
 
     /// @notice Read a trade (convenience for the frontend / judge panel).

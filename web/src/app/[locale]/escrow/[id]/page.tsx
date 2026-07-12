@@ -8,6 +8,8 @@ import { AppHeader } from "@/components/AppHeader";
 import { StatusChip } from "@/components/StatusChip";
 import { LanternLifecycle } from "@/components/LanternLifecycle";
 import { EscrowActions } from "@/components/EscrowActions";
+import { ShipmentTimeline } from "@/components/ShipmentTimeline";
+import { SupplierReputation } from "@/components/SupplierReputation";
 import { useEscrow } from "@/hooks/useEscrows";
 import { formatAmount, shortAddr, AMOY_EXPLORER } from "@/lib/format";
 import { tokenFor } from "@/contracts/tokens";
@@ -85,6 +87,10 @@ export default function EscrowPage() {
               <p className="relative text-sm font-medium text-success">✓ {t("released")}</p>
             </motion.div>
           )}
+
+          <SupplierReputation address={trade.exporter} />
+
+          <ShipmentTimeline trade={trade} />
 
           <div className="card">
             <EscrowActions trade={trade} onChange={refetch} />

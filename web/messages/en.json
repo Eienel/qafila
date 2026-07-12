@@ -156,6 +156,41 @@
     "back": "Back to dashboard",
     "faucetExternal": "Get test {symbol}"
   },
+  "reputation": {
+    "title": "Supplier reputation",
+    "trustScore": "on-chain trust score",
+    "noHistory": "No trade history yet — this is a new counterparty.",
+    "released": "Released",
+    "disputed": "Disputed",
+    "refunded": "Refunded",
+    "active": "In progress",
+    "cleanRate": "{pct}% of completed trades released cleanly.",
+    "sourceNote": "Derived from on-chain trade history — not self-reported.",
+    "tier": {
+      "new": "New",
+      "bronze": "Bronze",
+      "silver": "Silver",
+      "gold": "Gold"
+    }
+  },
+  "track": {
+    "title": "Shipment tracking",
+    "empty": "No tracking updates yet.",
+    "postHint": "Post a tracking update. Each milestone is recorded on-chain.",
+    "locationPh": "Location (e.g. Jebel Ali)",
+    "notePh": "Note (optional)",
+    "post": "Post update",
+    "posting": "Posting…",
+    "status": {
+      "booked": "Booked",
+      "pickedUp": "Picked up",
+      "inTransit": "In transit",
+      "atCustoms": "At customs",
+      "outForDelivery": "Out for delivery",
+      "delivered": "Delivered",
+      "unknown": "Update"
+    }
+  },
   "common": {
     "loading": "Loading…",
     "cancel": "Cancel",

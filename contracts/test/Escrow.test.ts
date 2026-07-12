@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { ethers } from "hardhat";
 import { time } from "@nomicfoundation/hardhat-network-helpers";
+import { anyValue } from "@nomicfoundation/hardhat-chai-matchers/withArgs";
 import { keccak256, toUtf8Bytes } from "ethers";
 
 const AMOUNT = 1000n * 10n ** 6n; // 1,000 AEDx (6 decimals)
@@ -126,6 +127,40 @@ describe("Escrow", () => {
       escrow,
       "InvalidState"
     );
+  });
+
+  it("records a shipment-tracking timeline without touching funds or state", async () => {
+    const { importer, exporter, other, token, escrow, deadline } = await deploy();
+    await escrow
+      .connect(importer)
+      .createTrade(exporter.address, await token.getAddress(), AMOUNT, ethers.ZeroHash, deadline);
+
+    // Cannot post before funding.
+    await expect(
+      escrow.connect(exporter).postMilestone(0, 0, "Jebel Ali", "booked")
+    ).to.be.revertedWithCustomError(escrow, "InvalidState");
+
+    await escrow.connect(importer).fund(0);
+
+    // Only the exporter (shipping party) may post.
+    await expect(
+      escrow.connect(other).postMilestone(0, 0, "Jebel Ali", "booked")
+    ).to.be.revertedWithCustomError(escrow, "NotExporter");
+
+    await expect(escrow.connect(exporter).postMilestone(0, 2, "Arabian Sea", "in transit"))
+      .to.emit(escrow, "MilestonePosted")
+      .withArgs(0, 0, 2, "Arabian Sea", "in transit", anyValue);
+
+    // Still postable after Shipped; funds/state untouched by tracking.
+    await escrow.connect(exporter).submitDoc(0, keccak256(toUtf8Bytes("bol")));
+    expect((await escrow.getTrade(0)).state).to.equal(2); // Shipped
+    await escrow.connect(exporter).postMilestone(0, 5, "Rotterdam", "delivered");
+
+    expect(await escrow.milestoneCount(0)).to.equal(2);
+    const timeline = await escrow.getMilestones(0);
+    expect(timeline[0].status).to.equal(2);
+    expect(timeline[1].location).to.equal("Rotterdam");
+    expect(timeline[1].status).to.equal(5);
   });
 
   it("validates createTrade inputs", async () => {

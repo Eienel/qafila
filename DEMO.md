@@ -34,6 +34,7 @@ Open `http://localhost:3000` → it lands on the EN hero. Toggle **EN / العر
 | 2 | "They screen the counterparty first — we stand on OpenSanctions, we don't rebuild it." | Click **New escrow**, type a supplier name → **Screen** → badge shows **Screened — clear**. | Green screening badge. |
 | 3 | "Funds are locked in trust — amana — not sent. The lantern lights up." | Open the seeded **Funded** escrow (#0). | Gold glow; funds held in the mashrabiya panel. |
 | 4 | "The supplier proves shipment by submitting the agreed document. Its keccak256 hash is checked on-chain." | Switch to the **Exporter** wallet → open escrow #0 → upload **Bill of Lading.pdf** → **Submit document hash**. | State → Shipped. |
+| 4b | "Along the way the supplier posts shipment milestones — booked, in transit, delivered — each written on-chain and shown as a verifiable tracking timeline." | As the **Exporter**, in **Shipment tracking**, pick a status + location → **Post update**. | Timeline grows with each milestone. |
 | 5 | "The hash matches the agreed hash, so the escrow releases automatically — the light passes to the supplier." | Watch the auto-release (or, in importer-confirms mode, tap **Confirm & release**). | Success-green receipt, gold light sweep, tx hash → Amoy explorer. |
 | 6 | "The honest frontier: proving physical goods actually shipped. Our MVP uses doc-hash + buyer confirmation and is explicit that trustless physical-delivery verification is the hard part." | — | — |
 
