@@ -156,6 +156,24 @@
     "back": "Back to dashboard",
     "faucetExternal": "Get test {symbol}"
   },
+  "track": {
+    "title": "Shipment tracking",
+    "empty": "No tracking updates yet.",
+    "postHint": "Post a tracking update. Each milestone is recorded on-chain.",
+    "locationPh": "Location (e.g. Jebel Ali)",
+    "notePh": "Note (optional)",
+    "post": "Post update",
+    "posting": "Posting…",
+    "status": {
+      "booked": "Booked",
+      "pickedUp": "Picked up",
+      "inTransit": "In transit",
+      "atCustoms": "At customs",
+      "outForDelivery": "Out for delivery",
+      "delivered": "Delivered",
+      "unknown": "Update"
+    }
+  },
   "common": {
     "loading": "Loading…",
     "cancel": "Cancel",
